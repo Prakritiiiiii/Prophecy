@@ -1,11 +1,20 @@
 //import 'dart:html';
-import 'package:google_nav_bar/google_nav_bar.dart';
+//import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+//import 'package:minor/home_page.dart';
+//import 'package:minor/login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:minor/Authorization/main_page.dart';
+//import 'package:minor/register_page.dart';
 
-void main(){
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget{
@@ -14,20 +23,19 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return const MaterialApp(
         debugShowCheckedModeBanner: false,//use MaterialApp() widget like this
-        home: SplashScreen() //create new widget class for this 'home' to
-      // escape 'No MediaQuery widget found' error
+        home: SplashScreen()
     );
   }
 }
 
 //create new class for "home" property of MaterialApp()
-class HomeScreen extends StatelessWidget {
+/*class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.blue[900],
 
 
       //theme rakhne ki na rakhne bhanera confused
@@ -55,7 +63,7 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0.0,
           title: const Text('Prophecy'),
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.blue[900],
           //theme: ThemeData(fontFamily: 'Bebas Neue Regular'),
           centerTitle: true,
           actions: [
@@ -67,20 +75,20 @@ class HomeScreen extends StatelessWidget {
 
         ),
         bottomNavigationBar : Container(
-          color: Colors.black,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 20),
+          color: const Color(0xFF0D47A1),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 20),
             child: GNav(
-              backgroundColor: Colors.black,
+              backgroundColor: Color(0xFF0D47A1),
               color: Colors.white,
               activeColor: Colors.white,
-              tabBackgroundColor: Colors.grey.shade800,
+              tabBackgroundColor: Colors.black,
               gap: 8,
               //onTabChange: ,
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
 
 
-              tabs: const [
+              tabs: [
                 GButton(
                   icon: Icons.home,
                   text: 'Home',
@@ -122,7 +130,7 @@ class HomeScreen extends StatelessWidget {
           height: 800,
           width: double.infinity,
           decoration: const BoxDecoration(
-            color: Colors.grey,
+            color: Colors.white,
             //color: Color(0xFF81D4FA),
             borderRadius:BorderRadius.only(
               topLeft: Radius.circular(30),
@@ -165,7 +173,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
+*/
 
 class SplashScreen extends StatefulWidget{
   const SplashScreen({Key? key}) : super(key: key);
@@ -181,14 +189,17 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds:3)).then((value){
       Navigator.of(context).pushReplacement(
-          CupertinoPageRoute(builder:(ctx) => const HomeScreen()));
+          CupertinoPageRoute(
+              builder:(ctx) => const MainPage()
+          )
+      );
 
     });
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Colors.blueGrey[100],
       body: SizedBox(
         width: double.infinity,
         child: Column(
