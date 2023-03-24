@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "763984765490",
+    "project_id": "prophecy-8fd3e",
+    "storage_bucket": "prophecy-8fd3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763984765490:android:17554cadd0f284f6c2522b",
+        "android_client_info": {
+          "package_name": "com.example.minor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763984765490-9r01evm186291nm2477i7sphkov4sb18.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr26saF2hAAyhqbTJSVWYM2e7hPPwI1bA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763984765490-9r01evm186291nm2477i7sphkov4sb18.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
