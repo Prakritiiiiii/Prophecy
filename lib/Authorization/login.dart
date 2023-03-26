@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 //import 'package:flutter_spinkit/flutter_spinkit.dart';
 //import 'package:minor/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:minor/Authorization/forgot%20Password.dart';
 //import 'package:minor/Authorization/register_page.dart';
 
 class LogInPage extends StatefulWidget{
@@ -88,6 +89,7 @@ class _LogInPageState extends State<LogInPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(
+                    obscureText: true,
                     controller: _passwordController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -104,6 +106,33 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                   ),
                 ),
+
+                SizedBox(height:10),
+
+                Padding(
+                  padding : const EdgeInsets.symmetric(horizontal: 25.0),
+                  child : Row(
+                    mainAxisAlignment : MainAxisAlignment.end,
+                    children :[
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return ForgotPasswordPage();
+                }));
+                },
+                        child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          color: Color(0xFF01579B),
+                        fontWeight: FontWeight.bold,
+                        ),
+                        ),
+                      ),
+                  ],
+                  ),
+                ),
+
                 const SizedBox(height: 10),
                 //signin button
                 Padding(

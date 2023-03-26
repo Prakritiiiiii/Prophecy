@@ -11,7 +11,7 @@ class  RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
+  bool isEmailVerified = false;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmpasswordController = TextEditingController();
@@ -24,13 +24,25 @@ class _RegisterPageState extends State<RegisterPage> {
 
       super.dispose();
    }
+
     Future signUp() async {
-     if(_passwordController.text.trim()==_confirmpasswordController.text.trim()){
-       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-         email: _emailController.text.trim(),
-         password: _passwordController.text.trim(),
-       );
-     }
+     try{
+       if(_passwordController.text.trim()==_confirmpasswordController.text.trim()){
+         await FirebaseAuth.instance.createUserWithEmailAndPassword(
+           email: _emailController.text.trim(),
+           password: _passwordController.text.trim(),
+         );
+       }
+     }on FirebaseAuthException catch(e) {
+         showDialog(
+             context: context,
+             builder: (context) {
+               return AlertDialog(
+                 content: Text(e.message.toString()),
+               );
+             }
+         );
+       }
     }
     @override
     Widget build(BuildContext context) {
@@ -105,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
 
-                    // confirm password textfield
+                    //confirm password textfield
                     const SizedBox(height:10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:minor/Pages/prediction_page.dart';
 //import 'package:minor/Authorization/login.dart';
 import '../Pages/home_page.dart';
-import '../Pages/news_page.dart';
+import '../News/news_page.dart';
 import '../Pages/watch_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class HoverPage extends StatefulWidget {
   const HoverPage({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class HoverPage extends StatefulWidget {
 
 class _HoverPageState extends State<HoverPage> {
   int _selectedIndex=0;
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
 
@@ -43,8 +47,8 @@ class _HoverPageState extends State<HoverPage> {
                 text: 'Wishlist',
               ),
               GButton(
-                icon: Icons.search,
-                text: 'Search',
+                icon: Icons.online_prediction,
+                text: 'Prediction',
               ),
               GButton(
                 icon: Icons.newspaper,
@@ -68,8 +72,10 @@ class _HoverPageState extends State<HoverPage> {
           return HomePage();
         case 1:
           return WatchList();
+        case 2:
+          return PredictionPage();
         case 3:
-          return NewsPage();
+          return CryptoNewsScreen(apiKey: '59c3af56a19f4c44aa08fb485e45a355',);
         default:
           return HomePage();
       }
