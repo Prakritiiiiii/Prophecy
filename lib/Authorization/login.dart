@@ -21,6 +21,16 @@ class _LogInPageState extends State<LogInPage> {
   //text controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final emailRegex = RegExp(r'^[a-zA-Z0-9.!#$%&\*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
+
+  // String validateEmail(String value) {
+  //   if (value.isEmpty) {
+  //     return 'Please enter an email address.';
+  //   } else if (!emailRegex.hasMatch(value)) {
+  //     return 'Please enter a valid email address.';
+  //   }
+  //   return null;
+  // }
 
   Future signIn() async{
     await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -67,7 +77,7 @@ class _LogInPageState extends State<LogInPage> {
                 const SizedBox(height:50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextField(
+                  child: TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -82,6 +92,7 @@ class _LogInPageState extends State<LogInPage> {
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
+                  //  validator: validateEmail,
                   ),
                 ),
                 const SizedBox(height:10),

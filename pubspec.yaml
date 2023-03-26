@@ -31,6 +31,7 @@ dependencies:
   get: ^4.6.5
   http: ^0.13.5
 
+
   flutter:
 
 
@@ -44,6 +45,8 @@ dependencies:
   firebase_auth: ^4.2.10
   google_fonts: ^4.0.3
   firebase_core: ^2.8.0
+  cloud_firestore: ^4.4.0
+  syncfusion_flutter_gauges: ^21.1.35
 dev_dependencies:
   flutter_test:
     sdk: flutter

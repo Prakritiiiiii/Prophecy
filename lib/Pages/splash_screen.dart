@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:minor/Authorization/main_page.dart';
+import 'package:minor/Pages/prediction_page.dart';
 //import 'package:minor/Pages/hover_page.dart';
 
 

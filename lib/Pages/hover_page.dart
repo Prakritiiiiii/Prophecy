@@ -71,9 +71,8 @@ class _HoverPageState extends State<HoverPage> {
         case 0:
           return HomePage();
         case 1:
-          return WatchList();
-        case 2:
-          return PredictionPage();
+          return WatchListPage();
+
         case 3:
           return CryptoNewsScreen(apiKey: '59c3af56a19f4c44aa08fb485e45a355',);
         default:

@@ -4,7 +4,11 @@ import 'package:minor/Authorization/change_password.dart';
 //import 'package:minor/Pages/hover_page.dart';
 //import 'dart:ui' show lerpDouble;
 import 'package:get/get.dart';
+import 'package:minor/Pages/prediction_page.dart';
 import 'package:minor/controllers/coin_controller.dart';
+
+import '../model/Coin.dart';
+//import 'package:firebase_auth/firebase_auth.dart'
 
 int itemCount = 10;
 List<bool> selected = new List<bool>.empty(growable: true);
@@ -20,10 +24,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   final CoinController coinController = Get.put(CoinController());
+  final CoinController coinController1 = Get.put(CoinController());
   final user = FirebaseAuth.instance.currentUser!;
 
-  Icon first_icon = Icon(Icons.favorite_outline);
-  Icon second_icon = Icon(Icons.favorite);
+  Icon first_icon = Icon(Icons.favorite);
+  Icon second_icon = Icon(Icons.favorite_outline);
   @override
   initState() {
     for (var i = 0; i < itemCount; i++) {
@@ -31,39 +36,87 @@ class _HomePageState extends State<HomePage> {
     }
     super.initState();
   }
+  void updateList(String value){
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[900],
+      backgroundColor: Color(0xFF1f1545),
       appBar: AppBar(
         elevation: 0.0,
-        title: const Text('Current Crypto Status'),
-        backgroundColor: Colors.blue[900],
-        centerTitle: true,
-        actions: [
+        //title: const Text('Current Crypto Status'),
+        backgroundColor: Color(0xFF1f1545),
+        //centerTitle: true,
+        /*actions: [
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.notifications),
           ),
-        ],
+        ],*/
 
       ),
-
       body: Container(
+
+        height :800,
+        width: double.infinity,
+        child:Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+      /*body: Container(
         height: 800,
         width: double.infinity,
         decoration: const BoxDecoration(
+          /*children: [
+          SizedBox(height: 75),
+          //app bar
+          Padding(
+              padding: const EdgeInsets.only(left: 25.0))
+          child: Container
+        ],*/
           color: Colors.white,
           //color: Color(0xFF81D4FA),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
           ),
-        ),
-        child: SingleChildScrollView(
-          physics: ScrollPhysics(),
-          child: Column(children: [
+        ),*/
+
+          //SingleChildScrollView(
+          //physics: ScrollPhysics(),
+          //child: Column(
+              //crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+            Text('Discover Todays Value',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+              color: Colors.white,
+            )),
+
+            SizedBox(height:20),
+
+            TextField(
+              style: TextStyle (color: Colors.white),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.blue[900],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide.none,
+                ),
+                hintText: 'eg : Bitcoin',
+                prefixIcon: Icon(Icons.search),
+                prefixIconColor: Colors.purple,
+              ),
+            ),
+
+            SizedBox(height: 20),
+
             Obx(
                   () =>
               coinController.isLoading.value
@@ -71,12 +124,20 @@ class _HomePageState extends State<HomePage> {
                 child: CircularProgressIndicator(),
               ) : ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: ScrollPhysics(),
                   itemCount: 10,
                   itemBuilder: (context, int index) {
                     selected.add(false);
+                    Coin item=coinController1.coinslist[index];
                     return GestureDetector(
-                        onTap: () {},
+                        onTap: () async{
+                          await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PredictionPage(
+                                    coin: item,
+                                  )));
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: SizedBox(
@@ -84,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                                 .of(context)
                                 .size
                                 .width,
-                            height: 135,
+                            height: 100,
                             child: Row(
                               mainAxisAlignment:
                               MainAxisAlignment.spaceBetween,  //divides space evenly between children
@@ -93,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     //image ko
                                     Container(
-                                      //alignment: ,
+                                      //alignment: Alignment.topCenter ,
                                       width: 60,
                                       height: 60,
                                       decoration: BoxDecoration(
@@ -132,29 +193,29 @@ class _HomePageState extends State<HomePage> {
                                                 color: Colors.blueGrey,
                                                 fontWeight: FontWeight.w600)),
 
-                                        Text("LTP",
+                                        /* Text("LTP",
                                             style: TextStyle(
                                             fontSize: 18,
                                             color: Colors.blueGrey,
-                                            fontWeight: FontWeight.w600)),
+                                            fontWeight: FontWeight.w600)),*/
 
-                                        Text(
+                                        Text( "LTP: "
                                             "\$ ${coinController.coinslist[index]
-                                                .currentPrice}",
+                                            .currentPrice}",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.blueGrey,
                                                 fontWeight: FontWeight.w600)),
 
-                                        Text("CH%",
+                                        /* Text("CH%",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.blueGrey,
-                                                fontWeight: FontWeight.w600)),
+                                                fontWeight: FontWeight.w600)),*/
 
-                                        Text(
+                                        Text("CH%: "
                                             "${coinController.coinslist[index]
-                                                .priceChangePercentage24H}%",
+                                            .priceChangePercentage24H}%",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.blueGrey,
@@ -173,21 +234,21 @@ class _HomePageState extends State<HomePage> {
                                   CrossAxisAlignment.start,
                                   children: [*/
                                 IconButton(
-                                icon: selected.elementAt(index) ? first_icon : second_icon,
-                            onPressed: () {
-                              try {
-                                // your code that you want this IconButton do
-                                setState(() {
-                                  selected[index] = !selected.elementAt(index);
-                                });
-                                //print('tap on ${index + 1}th IconButton ( change to : ');
-                                //print(selected[index] ? 'active' : 'deactive' + ' )');
-                              } catch (e) {
-                                //print(e);
-                              };
-                            },
-                        ),
-                      //],
+                                  icon: selected.elementAt(index) ? first_icon : second_icon,
+                                  onPressed: () {
+                                    try {
+                                      // your code that you want this IconButton do
+                                      setState(() {
+                                        selected[index] = !selected.elementAt(index);
+                                      });
+                                      //print('tap on ${index + 1}th IconButton ( change to : ');
+                                      //print(selected[index] ? 'active' : 'deactive' + ' )');
+                                    } catch (e) {
+                                      //print(e);
+                                    };
+                                  },
+                                ),
+                                //],
                                 //),
                               ],
                             ),
@@ -197,9 +258,9 @@ class _HomePageState extends State<HomePage> {
             )
           ]),
         ),
-      ),
 
-      drawer: Drawer(
+
+      /*drawer: Drawer(
           child: ListView(
             // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
@@ -244,7 +305,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           )
-      ),
+      ),*/
     );
   }
 }
