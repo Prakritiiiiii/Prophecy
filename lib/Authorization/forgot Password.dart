@@ -47,17 +47,29 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple[200],
+        backgroundColor: Color(0xFF1f1545),
         elevation: 0,
       ),
-      body: Column(
+      body:  Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+
+        child :Column(
+
         children: [
-          Text ('Enter you email and we will send you the password reset link'),
+
+          SizedBox(height:30),
+
 
           //email textfield
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: TextField(
+          Text('Enter your email and we will send you a password reset link',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.black,
+          )),
+
+
+            TextField(
               controller: _emailController,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
@@ -73,7 +85,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 filled: true,
               ),
             ),
-          ),
+
+
           SizedBox(height:10),
 
           MaterialButton(
@@ -82,7 +95,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               color: Colors.deepPurple[200],
           ),
         ],
+
+      ),
       ),
     );
+
   }
 }

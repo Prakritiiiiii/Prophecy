@@ -4,7 +4,7 @@ import 'package:minor/Authorization/change_password.dart';
 //import 'package:minor/Pages/hover_page.dart';
 //import 'dart:ui' show lerpDouble;
 import 'package:get/get.dart';
-import 'package:minor/Pages/prediction_page.dart';
+import 'package:minor/Prediction/prediction_page.dart';
 import 'package:minor/controllers/coin_controller.dart';
 
 import '../model/Coin.dart';
@@ -27,8 +27,8 @@ class _HomePageState extends State<HomePage> {
   final CoinController coinController1 = Get.put(CoinController());
   final user = FirebaseAuth.instance.currentUser!;
 
-  Icon first_icon = Icon(Icons.favorite);
-  Icon second_icon = Icon(Icons.favorite_outline);
+  Icon first_icon = Icon(Icons.favorite,color: Colors.red);
+  Icon second_icon = Icon(Icons.favorite_outline,color: Colors.red);
   @override
   initState() {
     for (var i = 0; i < itemCount; i++) {
@@ -51,45 +51,26 @@ class _HomePageState extends State<HomePage> {
         //title: const Text('Current Crypto Status'),
         backgroundColor: Color(0xFF1f1545),
         //centerTitle: true,
-        /*actions: [
+        actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              FirebaseAuth.instance
+                  .signOut();
+            },
+            icon: const Icon(Icons.logout),
           ),
-        ],*/
+        ],
 
       ),
-      body: Container(
+      body: Padding(padding: EdgeInsets.all(16),
 
-        height :800,
-        width: double.infinity,
-        child:Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+          child:SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-      /*body: Container(
-        height: 800,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          /*children: [
-          SizedBox(height: 75),
-          //app bar
-          Padding(
-              padding: const EdgeInsets.only(left: 25.0))
-          child: Container
-        ],*/
-          color: Colors.white,
-          //color: Color(0xFF81D4FA),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-        ),*/
+              mainAxisAlignment: MainAxisAlignment.start,
 
-          //SingleChildScrollView(
-          //physics: ScrollPhysics(),
-          //child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+              children: [
 
             Text('Discover Todays Value',
             style: TextStyle(
@@ -104,14 +85,14 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle (color: Colors.white),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.blue[900],
+                fillColor: Color(0xff302360),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: BorderSide.none,
                 ),
                 hintText: 'eg : Bitcoin',
                 prefixIcon: Icon(Icons.search),
-                prefixIconColor: Colors.purple,
+                prefixIconColor: Colors.white,
               ),
             ),
 
@@ -120,7 +101,7 @@ class _HomePageState extends State<HomePage> {
             Obx(
                   () =>
               coinController.isLoading.value
-                  ? Center(
+                  ? Expanded(
                 child: CircularProgressIndicator(),
               ) : ListView.builder(
                   shrinkWrap: true,
@@ -158,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                                       width: 60,
                                       height: 60,
                                       decoration: BoxDecoration(
-                                          color: Colors.black,
+                                          color: Colors.white,
                                           borderRadius:
                                           BorderRadius.circular(20)),
                                       child: Padding(
@@ -181,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                                                 .coinslist[index].name,
                                             style: TextStyle(
                                                 fontSize: 22,
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 fontWeight:
                                                 FontWeight.w700)),
 
@@ -257,7 +238,9 @@ class _HomePageState extends State<HomePage> {
                   }),
             )
           ]),
-        ),
+        )
+      ),
+    );
 
 
       /*drawer: Drawer(
@@ -306,6 +289,6 @@ class _HomePageState extends State<HomePage> {
             ],
           )
       ),*/
-    );
+    
   }
 }

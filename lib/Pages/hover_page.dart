@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:minor/Pages/prediction_page.dart';
+import 'package:minor/Prediction/prediction_page.dart';
 //import 'package:minor/Authorization/login.dart';
 import '../Pages/home_page.dart';
 import '../News/news_page.dart';
 import '../Pages/watch_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 
 
 class HoverPage extends StatefulWidget {
@@ -24,14 +25,15 @@ class _HoverPageState extends State<HoverPage> {
     Widget navigator() {
       return Container(
         //Container(
-        color: const Color(0xFF0D47A1),
+        color: Color(0xFF1f1545).withOpacity(0.5),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
           child: GNav(
-            backgroundColor: const Color(0xFF0D47A1),
+            backgroundColor: Color(0xFF1f1545).withOpacity(0.5),
+            //const Color(0xFF0D47A1),
             color: Colors.white,
             activeColor: Colors.white,
-            tabBackgroundColor: Colors.black,
+            tabBackgroundColor: Color(0xFF1f1545),
             gap: 8,
             //onTabChange: ,
             padding: const EdgeInsets.all(16),
@@ -46,10 +48,7 @@ class _HoverPageState extends State<HoverPage> {
                 icon: Icons.favorite_border,
                 text: 'Wishlist',
               ),
-              GButton(
-                icon: Icons.online_prediction,
-                text: 'Prediction',
-              ),
+
               GButton(
                 icon: Icons.newspaper,
                 text: 'News',
@@ -73,8 +72,8 @@ class _HoverPageState extends State<HoverPage> {
         case 1:
           return WatchListPage();
 
-        case 3:
-          return CryptoNewsScreen(apiKey: '59c3af56a19f4c44aa08fb485e45a355',);
+        case 2:
+          return CryptoNewsScreen(apiKey:'59c3af56a19f4c44aa08fb485e45a355');
         default:
           return HomePage();
       }

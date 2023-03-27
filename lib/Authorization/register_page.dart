@@ -1,7 +1,10 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_auth/email_auth.dart';
 
 class  RegisterPage extends StatefulWidget {
   final VoidCallback showLogInPage;
@@ -16,14 +19,16 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmpasswordController = TextEditingController();
-  final _usernameController = TextEditingController();
+
+
+
 
     @override
     void dispose() {
       _emailController.dispose();
       _passwordController.dispose();
       _confirmpasswordController.dispose();
-      _usernameController.dispose();
+
 
       super.dispose();
    }
@@ -34,9 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
          await FirebaseAuth.instance.createUserWithEmailAndPassword(
            email: _emailController.text.trim(),
            password: _passwordController.text.trim(),
-         );
-         addUserDetails(
-             _usernameController.text.trim(),
          );
        }
      }on FirebaseAuthException catch(e) {
@@ -51,11 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
        }
     }
 
-    Future addUserDetails(String username) async{
-      await FirebaseFirestore.instance.collection('user').add({
-        'username': username,
-      });
-    }
+
     @override
     Widget build(BuildContext context) {
     return Scaffold(
@@ -101,27 +99,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           hintText: 'Email',
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height:10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.deepPurple),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: 'Username',
                           fillColor: Colors.grey[200],
                           filled: true,
                         ),
