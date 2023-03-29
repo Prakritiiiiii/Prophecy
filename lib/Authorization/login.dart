@@ -29,14 +29,25 @@ class _LogInPageState extends State<LogInPage> {
   //   } else if (!emailRegex.hasMatch(value)) {
   //     return 'Please enter a valid email address.';
   //   }
-  //   return null;
+  //   return 'null';
   // }
 
   Future signIn() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
-    );
+      );
+    }on FirebaseAuthException catch(e) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(e.message.toString()),
+            );
+          }
+      );
+    }
 
   }
   @override

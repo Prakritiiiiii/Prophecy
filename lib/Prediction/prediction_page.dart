@@ -136,10 +136,10 @@ class _PredictionPageState extends State<PredictionPage> {
               //labelsPosition: GaugeElementPosition.outside,
               axisLabelStyle: GaugeTextStyle(fontSize: 12),
               ranges: <GaugeRange>[
-                GaugeRange(startValue: 0, endValue: 50, color: Colors.green, label:'safe'),
+                GaugeRange(startValue: 0, endValue: 50, color: Colors.red, label:'safe'),
                 GaugeRange(
                 startValue: 50, endValue: 100, color: Colors.orange, label : 'medium'),
-            GaugeRange(startValue: 100, endValue: 150, color: Colors.red,label: 'risky'),
+            GaugeRange(startValue: 100, endValue: 150, color: Colors.green,label: 'risky'),
           ], pointers: <GaugePointer>[
             NeedlePointer(
                 value: data.getSentimentValue(cryptoSymbol)?.toDouble() ??

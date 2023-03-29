@@ -22,10 +22,12 @@ class HomePage extends StatefulWidget {
 
 
 class _HomePageState extends State<HomePage> {
+  //List<String> itemList = Coin item;
 
   final CoinController coinController = Get.put(CoinController());
   final CoinController coinController1 = Get.put(CoinController());
   final user = FirebaseAuth.instance.currentUser!;
+  String searchQuery = 'empty';
 
   Icon first_icon = Icon(Icons.favorite,color: Colors.red);
   Icon second_icon = Icon(Icons.favorite_outline,color: Colors.red);
@@ -35,11 +37,6 @@ class _HomePageState extends State<HomePage> {
       selected.add(false);
     }
     super.initState();
-  }
-  void updateList(String value){
-    setState(() {
-
-    });
   }
 
   @override
@@ -82,6 +79,11 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height:20),
 
             TextField(
+              onChanged: (value){
+                setState(() {
+                  searchQuery = value;
+                });
+              },
               style: TextStyle (color: Colors.white),
               decoration: InputDecoration(
                 filled: true,
@@ -90,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: BorderSide.none,
                 ),
-                hintText: 'eg : Bitcoin',
+                hintText: 'eg : search here',
                 prefixIcon: Icon(Icons.search),
                 prefixIconColor: Colors.white,
               ),
@@ -106,135 +108,277 @@ class _HomePageState extends State<HomePage> {
               ) : ListView.builder(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
-                  itemCount: 10,
+                  itemCount: 100,
                   itemBuilder: (context, int index) {
                     selected.add(false);
                     Coin item=coinController1.coinslist[index];
-                    return GestureDetector(
-                        onTap: () async{
-                          await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PredictionPage(
-                                    coin: item,
-                                  )));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: SizedBox(
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width,
-                            height: 100,
-                            child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,  //divides space evenly between children
-                              children: [
-                                Row(
-                                  children: [
-                                    //image ko
-                                    Container(
-                                      //alignment: Alignment.topCenter ,
-                                      width: 60,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                          BorderRadius.circular(20)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Image.network(coinController
-                                            .coinslist[index].image),
+
+                    if (item.name.toLowerCase().contains(searchQuery.toLowerCase())){
+                      return GestureDetector(
+                          onTap: () async {
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PredictionPage(
+                                          coin: item,
+                                        )));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: SizedBox(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width,
+                              height: 100,
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                //divides space evenly between children
+                                children: [
+                                  Row(
+                                    children: [
+                                      //image ko
+                                      Container(
+                                        //alignment: Alignment.topCenter ,
+                                        width: 60,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                            BorderRadius.circular(20)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Image.network(coinController1
+                                              .coinslist[index].image),
+                                        ),
                                       ),
-                                    ),
-                                    //bich ko space
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    //bitcoin wala
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            coinController
-                                                .coinslist[index].name,
-                                            style: TextStyle(
-                                                fontSize: 22,
-                                                color: Colors.white,
-                                                fontWeight:
-                                                FontWeight.w700)),
+                                      //bich ko space
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      //bitcoin wala
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              coinController
+                                                  .coinslist[index].name,
+                                              style: TextStyle(
+                                                  fontSize: 22,
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                  FontWeight.w700)),
 
-                                        Text(
-                                            coinController
-                                                .coinslist[index].symbol,
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.blueGrey,
-                                                fontWeight: FontWeight.w600)),
+                                          Text(
+                                              coinController
+                                                  .coinslist[index].symbol,
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blueGrey,
+                                                  fontWeight: FontWeight.w600)),
 
-                                        /* Text("LTP",
+                                          /* Text("LTP",
                                             style: TextStyle(
                                             fontSize: 18,
                                             color: Colors.blueGrey,
                                             fontWeight: FontWeight.w600)),*/
 
-                                        Text( "LTP: "
-                                            "\$ ${coinController.coinslist[index]
-                                            .currentPrice}",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.blueGrey,
-                                                fontWeight: FontWeight.w600)),
+                                          Text("LTP: "
+                                              "\$ ${coinController
+                                              .coinslist[index]
+                                              .currentPrice}",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blueGrey,
+                                                  fontWeight: FontWeight.w600)),
 
-                                        /* Text("CH%",
+                                          /* Text("CH%",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.blueGrey,
                                                 fontWeight: FontWeight.w600)),*/
 
-                                        Text("CH%: "
-                                            "${coinController.coinslist[index]
-                                            .priceChangePercentage24H}%",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.blueGrey,
-                                                fontWeight:
-                                                FontWeight.w600)),
+                                          Text("CH%: "
+                                              "${coinController.coinslist[index]
+                                              .priceChangePercentage24H}%",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blueGrey,
+                                                  fontWeight:
+                                                  FontWeight.w600)),
 
 
-                                      ],
-                                    ),
-                                  ], //children
-                                ),
+                                        ],
+                                      ),
+                                    ], //children
+                                  ),
 
 
-                                /*Column(
+                                  /*Column(
                                   crossAxisAlignment:
                                   CrossAxisAlignment.start,
                                   children: [*/
-                                IconButton(
-                                  icon: selected.elementAt(index) ? first_icon : second_icon,
-                                  onPressed: () {
-                                    try {
-                                      // your code that you want this IconButton do
-                                      setState(() {
-                                        selected[index] = !selected.elementAt(index);
-                                      });
-                                      //print('tap on ${index + 1}th IconButton ( change to : ');
-                                      //print(selected[index] ? 'active' : 'deactive' + ' )');
-                                    } catch (e) {
-                                      //print(e);
-                                    };
-                                  },
-                                ),
-                                //],
-                                //),
-                              ],
+                                  IconButton(
+                                    icon: selected.elementAt(index)
+                                        ? first_icon
+                                        : second_icon,
+                                    onPressed: () {
+                                      try {
+                                        // your code that you want this IconButton do
+                                        setState(() {
+                                          selected[index] =
+                                          !selected.elementAt(index);
+                                        });
+                                        //print('tap on ${index + 1}th IconButton ( change to : ');
+                                        //print(selected[index] ? 'active' : 'deactive' + ' )');
+                                      } catch (e) {
+                                        //print(e);
+                                      };
+                                    },
+                                  ),
+                                  //],
+                                  //),
+                                ],
+                              ),
                             ),
-                          ),
-                        ));
+                          ));
+
+                    } else {
+                      return GestureDetector(
+                          onTap: () async {
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PredictionPage(
+                                          coin: item,
+                                        )));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: SizedBox(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width,
+                              height: 100,
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                //divides space evenly between children
+                                children: [
+                                  Row(
+                                    children: [
+                                      //image ko
+                                      Container(
+                                        //alignment: Alignment.topCenter ,
+                                        width: 60,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                            BorderRadius.circular(20)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Image.network(coinController
+                                              .coinslist[index].image),
+                                        ),
+                                      ),
+                                      //bich ko space
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      //bitcoin wala
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              coinController
+                                                  .coinslist[index].name,
+                                              style: TextStyle(
+                                                  fontSize: 22,
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                  FontWeight.w700)),
+
+                                          Text(
+                                              coinController
+                                                  .coinslist[index].symbol,
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blueGrey,
+                                                  fontWeight: FontWeight.w600)),
+
+                                          /* Text("LTP",
+                                            style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.blueGrey,
+                                            fontWeight: FontWeight.w600)),*/
+
+                                          Text("LTP: "
+                                              "\$ ${coinController
+                                              .coinslist[index]
+                                              .currentPrice}",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blueGrey,
+                                                  fontWeight: FontWeight.w600)),
+
+                                          /* Text("CH%",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.blueGrey,
+                                                fontWeight: FontWeight.w600)),*/
+
+                                          Text("CH%: "
+                                              "${coinController.coinslist[index]
+                                              .priceChangePercentage24H}%",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blueGrey,
+                                                  fontWeight:
+                                                  FontWeight.w600)),
+
+
+                                        ],
+                                      ),
+                                    ], //children
+                                  ),
+
+
+                                  /*Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [*/
+                                  IconButton(
+                                    icon: selected.elementAt(index)
+                                        ? first_icon
+                                        : second_icon,
+                                    onPressed: () {
+                                      try {
+                                        // your code that you want this IconButton do
+                                        setState(() {
+                                          selected[index] =
+                                          !selected.elementAt(index);
+                                        });
+                                        //print('tap on ${index + 1}th IconButton ( change to : ');
+                                        //print(selected[index] ? 'active' : 'deactive' + ' )');
+                                      } catch (e) {
+                                        //print(e);
+                                      };
+                                    },
+                                  ),
+                                  //],
+                                  //),
+                                ],
+                              ),
+                            ),
+                          ));
+                    }
                   }),
             )
           ]),

@@ -1,15 +1,15 @@
 class Data {
   Map<String, String> myMap = {
-    'btc': '\$26000',
-    'eth': '\$26000',
-    'sol': '\$26000',
-    'bnb': '\$26000',
-    'ada': '\$26000',
+    'btc': '\$28219',
+    'eth': '\$1781.4282',
+    'sol': '\$19.78',
+    'bnb': '\$331.76',
+    'ada': '\$0.3616',
   };
   late Map<String, double> mySentimentMap = {
     'btc': 70,
     'eth': 105,
-    'sol': 40,
+    'sol': 110,
     'bnb': 105,
     'ada': 30,
   };

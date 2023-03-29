@@ -73,7 +73,7 @@ class _HoverPageState extends State<HoverPage> {
           return WatchListPage();
 
         case 2:
-          return CryptoNewsScreen(apiKey:'59c3af56a19f4c44aa08fb485e45a355');
+          return NewsApp();
         default:
           return HomePage();
       }
